@@ -4,11 +4,8 @@ steps:
   entrypoint: 'bash'
   args: [
    '-c', 
-   'docker pull gcr.io/$PROJECT_ID/nginx:latest || exit 0'
+   'docker pull gcr.io/my-project-56312-343412/nginx:latest || exit 0'
   ]
-#step 2 
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build','-t','gcr.io/my-project-56312-343412/nginx:v1.0','.']
 #step 3
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', 'k8s/']
@@ -22,13 +19,13 @@ steps:
    'image', 
    'deployment', 
    'nginx', 
-   'nginx=gcr.io/$PROJECT_ID/hello:$TAG_NAME'
+   'nginx=gcr.io/my-project-56312-343412/nginx:latest'
   ]
   env:
-  - 'CLOUDSDK_COMPUTE_ZONE=<cluster-zone>'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=<cluster-name>'
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
 # push images to Google Container Registry with tags
 images: [
-   'gcr.io/$PROJECT_ID/nginx:$TAG_NAME',
-   'gcr.io/$PROJECT_ID/nginx:latest'
+   'gcr.io/my-project-56312-343412/nginx:latest',
+   'gcr.io/my-project-56312-343412/nginx:latest'
   ]
